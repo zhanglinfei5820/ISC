@@ -1,0 +1,34 @@
+server:
+  port: 8095
+spring:
+  application:
+    name: isc-sidecar
+#  zipkin:
+#    enabled: true
+#    base-url: http://localhost:8081/  # zipkkin dashboard的地址：通过真实IP地址访问
+#    # 通过cloud-dashboard-zipkin注册到注册中心的服务名称访问，本版本(spring-cloud-sleuth-core-1.2.5.RELEASE)不支持，需要从spring-cloud-sleuth-core-1.3.0.RELEASE开始支持这个功能
+#    # 配置如下：
+#    # baseUrl: http://microservice-sleuth-server/
+#  sleuth:
+#     sampler:
+#       #  默认值为0.1f，现在为了测试设置100%采集
+#       percentage: 1
+eureka:
+  client:
+    healthcheck:
+      enabled: true                           # 开启健康检查（依赖spring-boot-starter-actuator）
+    service-url:  
+      defaultZone: http://localhost:8761/eureka/   #是设置eureka服务器所在的地址，查询服务和注册服务都需要依赖这个地址
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5      # 心跳时间，即服务续约间隔时间（缺省为30s）
+    lease-expiration-duration-in-seconds: 10  # 发呆时间，即服务续约到期时间（缺省为90s）
+      
+sidecar:
+  port: 8060    #异构微服务的端口号
+  health-uri: http://localhost:8060/health.json
+#日志配置
+logging:
+  level:
+    root: INFO
+    com.lucksoft: INFO

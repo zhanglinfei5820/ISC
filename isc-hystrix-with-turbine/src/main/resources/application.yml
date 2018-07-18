@@ -1,0 +1,32 @@
+server:
+  port: 8091
+spring:
+  application:
+    name: isc-hystrix-with-turbine
+eureka:
+  client:
+    healthcheck:
+      enabled: true                           # 开启健康检查（依赖spring-boot-starter-actuator）
+#    register-with-eureka: false               #强制不注册到注册服务器
+#    fetch-registry: false                     #表示是否从eureka服务器获取注册信息
+    service-url:  
+      defaultZone: http://localhost:8761/eureka/   #是设置eureka服务器所在的地址，查询服务和注册服务都需要依赖这个地址
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5      # 心跳时间，即服务续约间隔时间（缺省为30s）
+    lease-expiration-duration-in-seconds: 10  # 发呆时间，即服务续约到期时间（缺省为90s）
+turbine:
+  aggregator:
+    clusterConfig: default
+  appConfig: isc-ribbon-with-hystrix
+  clusterNameExpression: "'default'"
+#turbine:
+#  aggregator:
+#    clusterConfig: dufault
+#  appConfig: isc-ribbon-with-hystrix#配置eureka中serviceId列表，表明监控哪些服务
+#  clusterNameExpression: "'default'"#new String("default")    
+#日志配置
+logging:
+  level:
+    root: INFO
+    com.lucksoft: INFO

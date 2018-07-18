@@ -1,0 +1,21 @@
+server:
+  port: 8094
+spring:
+  application:
+    name: isc-gateway-zuul
+eureka:
+  client:
+    healthcheck:
+      enabled: true                           # 开启健康检查（依赖spring-boot-starter-actuator）
+    service-url:  
+      defaultZone: http://localhost:8761/eureka/   #是设置eureka服务器所在的地址，查询服务和注册服务都需要依赖这个地址
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5      # 心跳时间，即服务续约间隔时间（缺省为30s）
+    lease-expiration-duration-in-seconds: 10  # 发呆时间，即服务续约到期时间（缺省为90s）
+      
+#日志配置
+logging:
+  level:
+    root: INFO
+    com.lucksoft: INFO

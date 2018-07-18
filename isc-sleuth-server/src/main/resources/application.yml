@@ -1,0 +1,57 @@
+server:
+  port: 8081
+spring:
+#  rabbitmq:
+#    host: http://localhost:15672
+  application:
+    # 本服务注册到注册到服务器的名称, 这个名称就是后面调用服务时的服务标识符
+    name: isc-sleuth-server
+  #关闭本工程的推送到zipkin服务的功能
+  zipkin:
+    enabled: false
+#    storage:
+#      type: elasticsearch
+#      StorageComponent: elasticsearch
+#      elasticsearch:
+#        cluster: elasticsearch
+#        max-requests: 30
+#        index: zipkin
+#        index-shards: 3
+#        index-replicas: 1
+#        hosts: localhost:9300
+    storage:
+     type: mysql
+  sleuth:
+     enabled: false
+  datasource:
+     schema: classpath:/mysql.sql
+     url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+#     url: jdbc:mysql://120.24.208.111:3306/test?zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2b8
+     driverClassName: com.mysql.jdbc.Driver
+     username: root
+     password: 123456
+  # Switch this on to create the schema on startup:
+     initialize: true
+     continueOnError: true
+     
+eureka:
+  instance:
+    prefer-ip-address: true
+    instanceId: ${spring.application.name}:${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    healthcheck:
+      enabled: true
+#zipkin.storage.type: mysql
+#spring.zipkin.enabled: false
+#spring.sleuth.sampler.percentage: 1
+#zipkin.storage.type: elasticsearch
+#zipkin.storage.StorageComponent: elasticsearch
+#zipkin.storage.elasticsearch.cluster: elasticsearch
+#zipkin.storage.elasticsearch.max-requests: 30
+#zipkin.storage.elasticsearch.index: zipkin
+#zipkin.storage.elasticsearch.index-shards: 5
+#zipkin.storage.elasticsearch.index-replicas: 1
+#zipkin.storage.elasticsearch.hosts: localhost:9200
+

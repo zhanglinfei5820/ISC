@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: ISC-EUREKA-THIRD
+server:
+  port: 8763
+eureka:
+  instance:
+    hostname: isc-eureka-third
+#  freemarker:
+#    prefer-file-system-access: false         #是否优先从文件系统加载template，以支持热加载，默认为true
+  server:
+    enable-self-preservation: true           # 关闭自我保护模式（缺省为打开） false是关闭
+    eviction-interval-timer-in-ms: 60000       # 续期时间，即扫描失效服务的间隔时间（缺省为60*1000ms）
+  datacenter: colud
+  environment: product
+  client:
+    healthcheck:
+      enabled: true                           # 开启健康检查（依赖spring-boot-starter-actuator）
+#    register-with-eureka: false               #强制不注册到注册服务器
+#    fetch-registry: false                     #表示是否从eureka服务器获取注册信息
+    service-url:  
+      defaultZone: http://localhost:8763/eureka/,http://localhost:8761/eureka/   #是设置eureka服务器所在的地址，查询服务和注册服务都需要依赖这个地址
+      
+#日志配置
+logging:
+  level:
+    root: INFO
+    com.lucksoft: INFO
+    com.netflix: debug

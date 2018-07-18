@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
+       >
+
+   	 <!-- <bean id="ds1" name="ds1"
+	          class="org.springframework.jdbc.datasource.DriverManagerDataSource" primary="true">
+	        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver  "/>
+	        <property name="url" value="jdbc:oracle:thin:@10.10.138.10:1521:ITPM"/>
+	        <property name="username" value="RT21_DMS_BJ"/>
+	        <property name="password" value="luckserver"/>
+	    </bean>
+	   	<bean id="ds2" name="ds2"
+	          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver "/>
+	        <property name="url" value="jdbc:oracle:thin:@10.10.138.10:1521:ITPM"/>
+	        <property name="username" value="RT21_DMS_BJYY"/>
+	        <property name="password" value="luckserver"/>
+	    </bean> 
+	    <bean id="ds3" name="ds3"
+	          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver "/>
+	        <property name="url" value="jdbc:oracle:thin:@10.10.138.10:1521:ITPM"/>
+	        <property name="username" value="rt21_dms_mtrcm"/>
+	        <property name="password" value="luckserver"/>
+	    </bean>   -->
+    
+   <bean id="dms" name="dms"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource" primary="true">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver  "/>
+        <property name="url" value="jdbc:oracle:thin:@10.10.145.11:1521:ITPM"/>
+        <property name="username" value="RT21_DMS_BJ"/>
+        <property name="password" value="luckserver"/>
+    </bean>
+   <bean id="oms" name="oms"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver "/>
+        <property name="url" value="jdbc:oracle:thin:@10.10.145.11:1521:ITPM"/>
+        <property name="username" value="RT21_DMS_BJYY"/>
+        <property name="password" value="luckserver"/>
+    </bean>
+    <bean id="cm" name="cm"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver "/>
+        <property name="url" value="jdbc:oracle:thin:@10.10.145.11:1521:ITPM"/>
+        <property name="username" value="rt21_dms_mtrcm0109"/>
+        <property name="password" value="luckserver"/>
+    </bean> 
+    <bean id="aq" name="aq"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver "/>
+        <property name="url" value="jdbc:oracle:thin:@10.10.10.254:1521:ITPM"/>
+        <property name="username" value="itpmcqzy"/>
+        <property name="password" value="luckserver"/>
+    </bean> 
+
+    <!--动态选择数据源 -->
+    <bean id="dataSource" class="com.luckserver.config.DynamicDataSource" >
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="dms" value-ref="dms"/>
+                <entry key="oms" value-ref="oms"/>
+                <entry key="cm" value-ref="cm"/>
+                <entry key="aq" value-ref="aq"/>
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="dms"/>
+    </bean>
+
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+          destroy-method="destroy" >
+        <property name="dataSource" ref="dataSource" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <!-- <property name="database" value="ORACLE" /> -->
+                <property name="databasePlatform" value="org.hibernate.dialect.Oracle12cDialect"/>
+                <property name="showSql" value="true"/>
+            </bean>
+        </property>
+        <property name="packagesToScan" value="com.lucksoft.interfaces.hr.entity"/>
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="javax.persistence.schema-generation.database.action" value="none"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="transactionManager"
+          class="org.springframework.orm.jpa.JpaTransactionManager">
+
+        <property name="entityManagerFactory"
+                  ref="entityManagerFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+</beans>

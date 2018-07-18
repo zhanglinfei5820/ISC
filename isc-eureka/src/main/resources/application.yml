@@ -1,0 +1,72 @@
+#security:
+#  basic:
+#    enabled: true
+#  user:
+#    name: root
+#    password: luckserver
+spring:
+  application:
+    name: ISC-EUREKA
+server:
+  port: 8761
+eureka:
+#  instance:
+#    hostname: isc-eureka
+#  freemarker:
+#    prefer-file-system-access: false         #是否优先从文件系统加载template，以支持热加载，默认为true
+  server:
+    # 关闭自我保护模式
+    enable-self-preservation: false
+    # Eureka Server 自我保护系数，当enable-self-preservation=true时，启作用
+    # renewal-percent-threshold:
+    # 设置清理间隔,单位为毫秒,默认为0
+    eviction-interval-timer-in-ms: 5000
+    # 设置如果Eureka Server启动时无法从临近Eureka Server节点获取注册信息，它多久不对外提供注册服务
+    wait-time-in-ms-when-sync-empty: 6000000
+    # 集群之间相互更新节点信息的时间频率
+    peer-eureka-nodes-update-interval-ms: 60000
+#    enable-self-preservation: false           # 关闭自我保护模式（缺省为打开） false是关闭
+#    eviction-interval-timer-in-ms: 5000       # 续期时间，即扫描失效服务的间隔时间（缺省为60*1000ms）
+#  instance:
+#    lease-expiration-duration-in-seconds: 30 #服务过期时间配置,超过这个时间没有接收到心跳EurekaServer就会将这个实例剔除
+#    lease-renewal-interval-in-seconds: 10 #服务刷新时间配置，每隔这个时间会主动心跳一次
+  instance:
+    lease-renewal-interval-in-seconds: 3      # 心跳时间，即服务续约间隔时间（缺省为30s）
+    lease-expiration-duration-in-seconds: 7   # 发呆时间，即服务续约到期时间（缺省为90s）
+  datacenter: colud
+  environment: product
+  client:
+    healthcheck:
+      enabled: true                           # 开启健康检查（依赖spring-boot-starter-actuator）
+    register-with-eureka: false               #强制不注册到注册服务器
+    fetch-registry: false                     #表示是否从eureka服务器获取注册信息
+    # 客户端从Eureka Server集群里更新Eureka Server信息的频率
+    eureka-service-url-poll-interval-seconds: 30
+    # 定义从注册中心获取注册服务的信息
+    registry-fetch-interval-seconds: 5
+    service-url:  
+      defaultZone: http://localhost:8761/eureka/
+      #,http://localhost:8762/eureka/   #是设置eureka服务器所在的地址，查询服务和注册服务都需要依赖这个地址
+      
+#日志配置
+logging.level.root: INFO
+logging.level.com.lucksoft: INFO
+#  server:
+#    enable-self-preservation: false
+#  dashboard:
+#    enabled: true ##配置eureka访问路径 false是禁用
+#    path: /x
+#    eviction-interval-timer-in-ms: 4000
+#spring.application.name=eureka-server
+#
+#server.port=10001
+#
+##强制不注册到注册服务器
+#eureka.client.register-with-eureka=false
+#eureka.client.fetch-registry=false
+##注册中心地址
+#eureka.client.serviceUrl.defaultZone=http://localhost:${server.port}/eureka/
+
+#驱逐下线的服务，间隔,5秒，默认是60，建议开发和测试环境配置
+#org.springframework.cloud.netflix.eureka.server.EurekaServerConfigBean.evictionIntervalTimerInMs
+#eureka.server.evictionIntervalTimerInMs: 5000 

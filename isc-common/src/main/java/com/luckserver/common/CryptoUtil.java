@@ -1,0 +1,107 @@
+package com.luckserver.common;
+
+import java.security.MessageDigest;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+
+public class CryptoUtil {
+
+    public static void main(String[] args) {
+    	String cKey = "Lbkz#bik8KTv4Is7";
+         // 需要加密的字串
+         String cSrc = "A5E96FCFF126AAD628BA560913ADD6D277F41CD90D97E1FDF743AA314D24B3C6B5FCA8EA458E71ACA5243F13B27DD23B99D25C3B466788F5F8573E991377ACCAF78CB92AF6B604F7C521801009F9C533F6BDB9ED19A33B80326EE231FE62A1191A8ED707B7A943AB2C5BCF69747468B92834946AF6400526BA6D5DDC2B5F5E729F784EEE4540A4BAEE1255F8E387522B8E4DDDC69EEACE2BFD0C1EE8F33302095CD94B3A52A28BF365E1BA040181F4A383862FA2079B8A2D8EFF1D3664EAF9E58CFE2F1C3BCA02DE41DB7327E89E280B94B5CC02668F8EC78A9BAF111D2CD16994FD20D7E3073C9FB5502055428CD22E90126BF5297BB42CFBBB808A99A7199715BB484AEAD02DD7BF9B4F5E26FFBFAD28974ABDF613228DFC2B473E50FAFCE49B1E9689CBE9A0B6678916D157F003485451BFAFB4F37936132F279F3A69330DDB3A0D99BF17BFA74EFBA7C3AC023E0C2806A4F839460774D0E2A41A8FDC3B55AC1737385E43422FB585486EDA74A65AFBC75FCFDA1BC7658AACE40DFD613F0A61FC0A32565DE87AF961970F16CD64DC5D329563A7C67E9F705E1211C250803F94B5158BC7AEDB6E4C7EE4099C25266A1D38C97EB11AA799723DF4534F45A622A2A09C18A17642AC53321BF380DCB06CAB2BFCD1CDE0A4F708306661C0AFEEB8BA1BDD1EA637E21993BF4435A5A5876DC8C5FFAB956830308B075B3F70226DA688256493C14BE1070ABC78E9C3E2E2F22C7C23735FE2330F42287E7F9F3AC857EBD878B246071200388617E0398FD5499AC4874A5494A84B12791FF04242DB8077628C9C8AC23534B1533BD7966D75A2D1CAAC0305ECB9A2F443AC68665B2D57142584DCBA87DF82E63D73EDC01EC9DB5EE53DD2414109A15474AE32D9EBD4ACB8B483C0ED75564D4A9B18B46906924D5B94EE89E9BDD2CA4E76322C5F8CC39A38043F406937273CB9799D588E8DB1E1AB05D8118ADB79737B594F8D37E9260040401C5315EC92EA96BD0C1B383D683B9902374874575B92B42695F3063E1B731DC07467399FB07E7940C49ECCCCCAF00D455006E3317AC6EAEED3F5E45D13C5AE421ABAB5005554D5E628BD483C6FE28D2ED0295D4F6CB1BA201DDF919F6FDE51456C05FC0C72870A956160ECA74897775614E17AA2B95D3FE6DF72B86A351CE9A18D07472A80BED98171182293F3DD21D4FFFC93040F9C3CFE701AE4E217FE663E1180CDA66CB9FDAB5C847CA90F7A18759996A5B17F2C6DEC6A0DC088F79CD9D44516933CA089CD73CF44EE5859514BB2A40184AEC4C255E19B4BB2255260F0C3DD9D7D4B099158D3E0711B3F2173ED00B0396F0350BB6EA7DABD565BFB4D7F5773F62773F480ED204D2B91857E16C44F8422C1AF0EEFF58332F733984627A200B827A968EE3E9CF3F3C101211E743EBE99651DD28ABA60BC4C94CF2F87C5B665581286271CF149F883DF06D099BE0F796F49FB92ADAFE38A80C3DF82DF0D0779017FEDCAE4AA84083AF6398430EFF6CF0D4B28C148416863A5A36C661A53738FD268F3E8788E83175258C80171E4E65D85492ED942F5927B574DCBF90D1E6E4427CAB061D94996691F033E98D0D1D65D90F30CAFD956B0597BD60557F18DAC5083D1ECF633ADA2839889A49E2B9419E0A07EA8412D32EBD35B6B8D17106D99AA123C74F2253A8A854E981D433D66A5D749927228CCAD9C6C867050EECE77E5BBD1A36ABA37E037083441139F902EF00BF38ADB6810D2DE1C3CB1CB79B5F4F793944F5375AA3645DB79AD427F6CA7503A966BB10B0B503180140B40E69ED0616878F39C84979B0CBFA822D3A3F3DB841D4C355B82B991F60A05A9821EE594AEB33B7EEC8BC6F449E9609529B850835E268FB8FA2F5E0F0C08EC0D73DF1E23F0A6F0CEA5AA8F8DE9440FFC2C239532C3DA1A3337F07D4E3411A1285E7A36DEC742132087768C0BE172665FAE3555DF12C247668D4F1D822C745F0A5DEC419415E278FAC67E6A0FE5231ED2F7F3E5CEC9644BC6301485D7B9F942F7058C1A24E8B199B31CC30CAE60E999E68BA11C74AA42BC39B824A6E3C4AA6D134F636FBB8B1396AF930445F7C0A287318DD383C8EE9E08A2C3C8DA7CC60718910009A5C834CEBA87B1B932F5723E744ADBC8E24D4F391B62547E1830E1CDEE0661D9ECC2";
+        String data = decrypt(cSrc, cKey);
+        println("result of decrypt=%s", data);
+    }
+
+    /**
+     * 加密
+     *
+     * @param data      要加密的数据
+     * @param key       密钥
+     */
+    public static String encrypt(String data, String key) {
+        try {
+            // 获取key的MD5值
+            byte[] md5Bytes = MessageDigest.getInstance("MD5").digest(key.getBytes());
+            // md5值转换成十六进制（大写）
+            String md5 = bytes2Hex(md5Bytes).toUpperCase();
+            println("keyMD5=%s", md5);
+            // 并获取前8位作为真实的key
+            String pwd = md5.substring(0, 16);
+            println("pwd=%s", pwd);
+            // 使用DES 加密，key和iv都使用pwd
+            // 根据pwd，生成DES加密后的密钥，SecretKeySpec对象
+            SecretKeySpec secretKey = new SecretKeySpec(pwd.getBytes(), "AES");
+            // 根据pwd，创建一个初始化向量IvParameterSpec对象
+            IvParameterSpec iv = new IvParameterSpec(pwd.getBytes());
+            // 创建密码器，参数：算法/模式/填充
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            // 用key和iv初始化密码器，参1：opmode，操作模式-加密、解密等。
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey, iv);
+            // 执行（加密）并返回结果（字节数组）
+            byte[] resultBytes = cipher.doFinal(data.getBytes("UTF-8"));
+            // 转换成十六进制（大写）
+            return bytes2Hex(resultBytes).toUpperCase();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 解密
+     *
+     * @param data      要解密的数据
+     * @param key       密钥
+     */
+    public static String decrypt(String data, String key) {
+        try {
+            // 把加密的十六进制字符串数据转换成字节数组
+            int len = data.length() >> 1;
+            byte[] dataBytes = new byte[len];
+            for (int i=0; i<len; i++) {
+                int index = i << 1;
+                dataBytes[i] = (byte)Integer.parseInt(data.substring(index, index + 2), 16);
+            }
+            // 获取key的MD5值
+            byte[] md5Bytes = MessageDigest.getInstance("MD5").digest(key.getBytes());
+            String pwd = bytes2Hex(md5Bytes).toUpperCase().substring(0, 16);
+            // 创建key和iv
+            SecretKeySpec secretKey = new SecretKeySpec(pwd.getBytes(), "AES");
+            IvParameterSpec iv = new IvParameterSpec(pwd.getBytes());
+            // DES 解密
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, iv);
+            byte[] resultBytes = cipher.doFinal(dataBytes);
+            return new String(resultBytes, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 字节数组转换成十六进制字符串
+     */
+    public static String bytes2Hex(byte[] bytes) {
+        if (bytes == null) {
+            return null;
+        }
+        StringBuilder resultSB = new StringBuilder();
+        for (byte b : bytes) {
+            String hex = Integer.toHexString(b & 0xFF);
+            if (hex.length() < 2) {
+                resultSB.append("0");
+            }
+            resultSB.append(hex);
+        }
+        return resultSB.toString();
+    }
+
+    public static void println(String format, Object... args) {
+        System.out.println(String.format(format, args));
+    }
+}
